@@ -1,3 +1,3 @@
 ﻿
-using var game = new PolyFlow.Game1();
+using var game = new PolyFlow.PolyFlow();
 game.Run();
