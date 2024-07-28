@@ -164,9 +164,9 @@ namespace PolyFlow.UI
 
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
+            Rectangle backing = new Rectangle((int)Math.Round(_xPos), (int)Math.Round(_yPos), (int)Math.Round(_length), (int)Math.Round(_currentHeight));
+            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw();
 
             base.Draw(gameTime);
         }

@@ -26,6 +26,7 @@ namespace PolyFlow
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), _spriteBatch);
 
             // TODO: use this.Content to load your game content here
         }
@@ -45,6 +46,7 @@ namespace PolyFlow
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            (Texture2D, Rectangle) 
 
             base.Draw(gameTime);
         }
