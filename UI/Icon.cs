@@ -1,17 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PolyFlow.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PolyFlow.UI
 {
-    internal abstract class Icon : DrawableGameComponent
+    internal class Icon : DrawableGameComponent, ResizableComponent
     {
-        private static readonly float BUTTON_GAP = 10;
+        internal static readonly int BUTTON_GAP = 10;
+        /// <summary>
+        /// The height of an individual clickable button under this icon
+        /// </summary>
+        internal readonly static int IND_HEIGHT = 30;
 
         /// <summary>
         /// Images associated with this UI icon. The texture in index 0 will be displayed by default. The others will be shown when this icon
@@ -36,22 +38,17 @@ namespace PolyFlow.UI
         /// <summary>
         /// The x positon of the top left corner of this Icon on the screen
         /// </summary>
-        private float _xPos = 0;
+        private float _xPos;
 
         /// <summary>
         /// The y positon of the top left corner of this Icon on the screen
         /// </summary>
-        private float _yPos = 0;
+        private float _yPos;
 
         /// <summary>
         /// The length of this icon
         /// </summary>
-        private float _length = 100;
-
-        /// <summary>
-        /// The height of an individual clickable button under this icon
-        /// </summary>
-        private float _height = 100;
+        private float _length;
 
         /// <summary>
         /// The height of this icon when fully extended
@@ -75,12 +72,16 @@ namespace PolyFlow.UI
 
 
 
-        public Icon(Game game, string[] iconFiles) : base(game)
+        public Icon(Game game, string[] iconFiles, int xPos, int yPos) : base(game)
         {
-            Array.Copy(iconFiles, _iconFiles, _icons.Length);
-            _totalHeight = _icons.Length * (_height + ( 2 * BUTTON_GAP)) ;
-            _baseHeight = (_height + (BUTTON_GAP * 2));
+            _iconFiles = new string[iconFiles.Length];
+            Array.Copy(iconFiles, _iconFiles, iconFiles.Length);
+            _totalHeight = iconFiles.Length * (IND_HEIGHT + ( 2 * BUTTON_GAP)) ;
+            _baseHeight = (IND_HEIGHT + (BUTTON_GAP * 2));
             _currentHeight = _baseHeight;
+            _length = Game.GraphicsDevice.Viewport.Width * 0.1f;
+            _xPos = xPos;
+            _yPos = yPos;
 
         }
 
@@ -166,9 +167,18 @@ namespace PolyFlow.UI
         {
             // TODO: Add your drawing code here
             Rectangle backing = new Rectangle((int)Math.Round(_xPos), (int)Math.Round(_yPos), (int)Math.Round(_length), (int)Math.Round(_currentHeight));
-            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw();
+            ShapePrimitiveProvider provider = Game.Services.GetService<ShapePrimitiveProvider>();
+
+            (Texture2D, Rectangle) colorRect = provider.GetUIRect(ShapePrimitiveProvider.RectColors.CHARCOAL);
+            
+            (Game.Services.GetService<SpriteBatch>()).Draw(colorRect.Item1, backing, colorRect.Item2, Color.White);
 
             base.Draw(gameTime);
+        }
+
+        public void OnResize()
+        {
+            _length = Game.GraphicsDevice.Viewport.Width * 0.1f;
         }
     }
 }
