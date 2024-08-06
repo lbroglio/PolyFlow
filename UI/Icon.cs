@@ -7,7 +7,7 @@ using System;
 
 namespace PolyFlow.UI
 {
-    internal class Icon : DrawableGameComponent, ResizableComponent
+    internal class Icon : DrawableGameComponent
     {
         internal static readonly int BUTTON_GAP = 10;
         /// <summary>
@@ -125,7 +125,7 @@ namespace PolyFlow.UI
             {
                 if (_currentHeight > _baseHeight)
                 {
-                    if (_currentHeight - _expandSpeed < _totalHeight)
+                    if (_currentHeight - _expandSpeed < _baseHeight)
                     {
                         _currentHeight -= (_currentHeight - _baseHeight);
                     }
@@ -152,10 +152,11 @@ namespace PolyFlow.UI
             }
             else
             {
-                if(_currentHeight < _baseHeight)
+                if(_currentHeight > _baseHeight)
                 {
                     _closing = true;
                 }
+                _opening = false;
             }
 
             // TODO: Add your update logic here
@@ -174,11 +175,6 @@ namespace PolyFlow.UI
             (Game.Services.GetService<SpriteBatch>()).Draw(colorRect.Item1, backing, colorRect.Item2, Color.White);
 
             base.Draw(gameTime);
-        }
-
-        public void OnResize()
-        {
-            _length = Game.GraphicsDevice.Viewport.Width * 0.1f;
         }
     }
 }

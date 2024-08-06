@@ -6,13 +6,13 @@ using PolyFlow.Utility;
 using System;
 using System.Collections.Generic;
 
+//TODO: Improve UI appearance
 namespace PolyFlow
 {
     public class PolyFlow : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Rectangle topBar;
         private ShapePrimitiveProvider _provider;
         private List<ResizableComponent> _resizeOnChange;
 
@@ -43,14 +43,16 @@ namespace PolyFlow
 
             _resizeOnChange = new List<ResizableComponent>();
 
-            String[] tmp = new string[0];
-            Icon tmp2 = new Icon(this, tmp, 30, 0);
-            Components.Add(tmp2);
-            _resizeOnChange.Add(tmp2);
 
+            // Create top menu bar 
+            FullBar topBar = new FullBar(this, 0, Icon.IND_HEIGHT + (2 * Icon.BUTTON_GAP));
+            Components.Add(topBar);
+            _resizeOnChange.Add(topBar);
 
-            topBar = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, Icon.IND_HEIGHT + (2 * Icon.BUTTON_GAP));
-
+            string[] iconOneImgs = new string[] {"UI/Circle", "UI/Rectangle", "UI/Triangle", "UI/RoundedRect"};
+            Icon iconOne = new Icon(this, iconOneImgs, 30, 0);
+            Components.Add(iconOne);
+           
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,17 +72,16 @@ namespace PolyFlow
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
 
-            // Draw top UI bar
-            (Texture2D, Rectangle) colorRect = _provider.GetUIRect(ShapePrimitiveProvider.RectColors.BLACK);
-            _spriteBatch.Draw(colorRect.Item1, topBar, colorRect.Item2, Color.White);
-
             base.Draw(gameTime);
             _spriteBatch.End();
         }
 
         public void OnResize(Object sender, EventArgs e)
         {
-
+            foreach(var toResize in _resizeOnChange)
+            {
+                toResize.OnResize();
+            }
         }
     }
 }
