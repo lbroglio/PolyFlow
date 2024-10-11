@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PolyFlow.Pages"
+             x:Class="PolyFlow.Pages.MainPage">
+ <ContentPage.Resources>
+  <local:GraphicsDrawable x:Key="drawable"/>
+ </ContentPage.Resources>
+    <VerticalStackLayout>
+        <HorizontalStackLayout 
+                x:Name="toolbar"
+                Margin="20">
+            <Picker x:Name="shapeAddSelect"
+                    Title="Add Shape"
+                />
+        </HorizontalStackLayout>
+        <GraphicsView x:Name="canvas" 
+                    Drawable="{StaticResource drawable}"
+                    HeightRequest="10"
+                    Background="Yellow"
+                    BackgroundColor="Yellow"/>
+    </VerticalStackLayout>
+
+</ContentPage>
