@@ -1,12 +1,15 @@
-﻿namespace PolyFlow.Pages;
+﻿using System.Diagnostics;
+using Microsoft.Maui.Graphics.Platform;
+using System.Reflection;
+using IImage = Microsoft.Maui.Graphics.IImage;
+
+namespace PolyFlow.Pages;
 
 public partial class MainPage : ContentPage
 {
 
-	public MainPage()
-	{
-		InitializeComponent();
-				
+	// Setup the canvas the user adds objects to 
+	private void SetupCanvas(){
 		// Set the size of the canvas to extend to the bottom of the screen
 
 		// Get the total height of the window
@@ -19,14 +22,43 @@ public partial class MainPage : ContentPage
 		else{
 			canvasHeight = screenHeight;
 		}
+
         // Calculate the height the canvas should be 
-
-
         if (FindByName("canvas") is GraphicsView canvas)
         {
             canvas.HeightRequest = canvasHeight;
         }
+	}
 
+	// Setup toolbar options
+	private void SetupSelectButton(){
+		if(FindByName("selectTool") is Button button){
+			// Load image
+			IImage image;
+			Assembly assembly = GetType().GetTypeInfo().Assembly;
+			using (Stream stream = assembly.GetManifestResourceStream("PolyFlow.Resources.Images.dotnet_bot.png"))
+			{
+				image = PlatformImage.FromStream(stream);
+			}
+
+			if(image != null){
+				// Resize the image
+				IImage resizedImage = image.Resize(100, 100, ResizeMode.Fit, true);
+				button.ImageSource = (ImageSource) resizedImage;
+
+			}
+		}
+	}
+
+
+
+
+	public MainPage()
+	{
+		InitializeComponent();
+
+		//Setup components
+		SetupCanvas();				
     }
 
 }

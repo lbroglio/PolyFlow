@@ -9,11 +9,9 @@
     <VerticalStackLayout>
         <HorizontalStackLayout 
                 x:Name="toolbar"
-                Margin="20">
-            <Picker x:Name="shapeAddSelect"
-                    Title="Add Shape"
-                />
-        </HorizontalStackLayout>
+                Margin="5">
+            <Button x:Name="selectTool" Text=""/>
+         </HorizontalStackLayout>
         <GraphicsView x:Name="canvas" 
                     Drawable="{StaticResource drawable}"
                     HeightRequest="10"
