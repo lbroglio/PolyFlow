@@ -10,7 +10,7 @@
         <HorizontalStackLayout 
                 x:Name="toolbar"
                 Margin="5">
-            <Button x:Name="selectTool" Text=""/>
+            <ImageButton x:Name="selectTool" Source="cursor.png" BackgroundColor="White"/>
          </HorizontalStackLayout>
         <GraphicsView x:Name="canvas" 
                     Drawable="{StaticResource drawable}"

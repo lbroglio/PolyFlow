@@ -30,35 +30,13 @@ public partial class MainPage : ContentPage
         }
 	}
 
-	// Setup toolbar options
-	private void SetupSelectButton(){
-		if(FindByName("selectTool") is Button button){
-			// Load image
-			IImage image;
-			Assembly assembly = GetType().GetTypeInfo().Assembly;
-			using (Stream stream = assembly.GetManifestResourceStream("PolyFlow.Resources.Images.dotnet_bot.png"))
-			{
-				image = PlatformImage.FromStream(stream);
-			}
-
-			if(image != null){
-				// Resize the image
-				IImage resizedImage = image.Resize(100, 100, ResizeMode.Fit, true);
-				button.ImageSource = (ImageSource) resizedImage;
-
-			}
-		}
-	}
-
-
-
-
 	public MainPage()
 	{
 		InitializeComponent();
 
 		//Setup components
-		SetupCanvas();				
+		SetupCanvas();		
+		//SetupSelectButton();		
     }
 
 }
